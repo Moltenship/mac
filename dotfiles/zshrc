@@ -1,0 +1,12 @@
+# Homebrew uses different prefixes on Apple Silicon and Intel Macs.
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+command -v mise >/dev/null && eval "$(mise activate zsh)"
+command -v starship >/dev/null && eval "$(starship init zsh)"
+
+# Keep machine-specific additions outside this repository.
+[[ ! -f "$HOME/.zshrc.local" ]] || source "$HOME/.zshrc.local"

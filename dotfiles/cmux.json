@@ -1,0 +1,15 @@
+{
+  "$schema": "https://raw.githubusercontent.com/manaflow-ai/cmux/main/web/data/cmux.schema.json",
+  "schemaVersion": 1,
+  "app": {
+    "appearance": "system"
+  },
+  "browser": {
+    "interceptTerminalOpenCommandInCmuxBrowser": false,
+    "openTerminalLinksInCmuxBrowser": false
+  },
+  "sidebarAppearance": {
+    "tintColor": "#000000",
+    "tintOpacity": 0.18
+  }
+}
