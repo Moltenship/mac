@@ -37,7 +37,7 @@ individual apps may have their own OS or architecture requirements.
 | Apps | 1Password, Chrome, Raycast, Shottr, Spotify, Telegram, VS Code, cmux, T3 Code Nightly |
 | CLI | Git, GitHub CLI, mise, Starship, Codex CLI |
 | Runtime | Node `latest`, managed by mise |
-| Settings | zsh, selected cmux preferences, VS Code settings and keybindings |
+| Settings | zsh, selected cmux preferences, VS Code settings and keybindings, press-and-hold disabled |
 | Editor extensions | Installed IDs captured in `vscode/extensions.txt` |
 
 **Telegram, T3 Code Nightly, Spotify, and Chrome are essential:** all four are
@@ -79,6 +79,16 @@ force replacement of application bundles.
 ./setup.sh --settings-only --dry-run
 ./setup.sh --settings-only
 ```
+
+Both full setup and settings-only mode also apply:
+
+```sh
+defaults write -g ApplePressAndHoldEnabled -bool false
+```
+
+This disables the press-and-hold accent popup. Restart affected apps after applying
+it. This macOS preference is not included in the file backups below; to re-enable
+it, run the same command with `true`. Dry-run mode only prints the command.
 
 Existing differing settings are moved to a unique directory under
 `~/.local/state/mac-setup/backup.*` before copies are installed. The script prints

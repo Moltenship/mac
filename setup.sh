@@ -88,6 +88,9 @@ install_setting "$repo_dir/dotfiles/cmux.json" "$HOME/.config/cmux/cmux.json" '.
 install_setting "$repo_dir/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json" 'Code/settings.json'
 install_setting "$repo_dir/vscode/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json" 'Code/keybindings.json'
 
+# Disable the accent popup when holding a key.
+run defaults write -g ApplePressAndHoldEnabled -bool false
+
 [[ -z "$backup_dir" ]] || echo "Previous settings saved in: $backup_dir"
 if "$dry_run"; then
   echo 'Preview complete. No apps, tools, or settings were changed.'
