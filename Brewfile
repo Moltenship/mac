@@ -16,6 +16,7 @@ cask "cmux"
 cask "raycast"
 cask "shottr"
 cask "visual-studio-code"
+cask "vorssaint"
 
 # Optional browser:
 # cask "helium-browser"

@@ -34,7 +34,7 @@ individual apps may have their own OS or architecture requirements.
 
 | Category | Contents |
 | --- | --- |
-| Apps | 1Password, Chrome, Raycast, Shottr, Spotify, Telegram, VS Code, cmux, T3 Code Nightly |
+| Apps | 1Password, Chrome, Raycast, Shottr, Spotify, Telegram, VS Code, Vorssaint, cmux, T3 Code Nightly |
 | CLI | Git, GitHub CLI, mise, Starship, Codex CLI |
 | Runtime | Node `latest`, managed by mise |
 | Settings | zsh, selected cmux preferences, VS Code settings and keybindings, press-and-hold disabled |
@@ -43,6 +43,9 @@ individual apps may have their own OS or architecture requirements.
 **Telegram, T3 Code Nightly, Spotify, and Chrome are essential:** all four are
 installed automatically by `./setup.sh` through Homebrew, with no manual downloads.
 You still sign in on each new Mac; account sessions are not stored in this repo.
+
+Vorssaint requires Apple Silicon and macOS 14 or later. Remove its Brewfile entry
+before running setup on an Intel Mac.
 
 Helium is optional: uncomment its line in `Brewfile` to include it. Apple-bundled
 apps are omitted. No additional languages or container tools have been added.
