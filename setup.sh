@@ -4,13 +4,16 @@ set -euo pipefail
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 dry_run=false
 settings_only=false
+restore_vscode=false
 for arg in "$@"; do
   case "$arg" in
     --dry-run) dry_run=true ;;
     --settings-only) settings_only=true ;;
+    --restore-vscode) restore_vscode=true ;;
     -h|--help)
-      echo 'Usage: ./setup.sh [--dry-run] [--settings-only]'
+      echo 'Usage: ./setup.sh [--dry-run] [--settings-only] [--restore-vscode]'
       echo 'Install/update apps and tools, then copy settings with backups.'
+      echo 'VS Code settings and extensions are managed by Sync unless --restore-vscode is set.'
       exit 0 ;;
     *) echo "Unknown option: $arg" >&2; exit 2 ;;
   esac
@@ -52,10 +55,17 @@ if ! "$settings_only"; then
     run mise use --global node@latest
     run mise exec node@latest -- npm install --global @openai/codex@latest
   )
+fi
+
+if "$restore_vscode"; then
   code_bin='/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code'
+  if ! "$dry_run" && [[ ! -x "$code_bin" ]]; then
+    echo 'Install VS Code before restoring its snapshot.' >&2
+    exit 1
+  fi
   while IFS= read -r extension || [[ -n "$extension" ]]; do
     [[ -n "$extension" && "$extension" != \#* ]] || continue
-    run "$code_bin" --install-extension "$extension" --force
+    run "$code_bin" --profile Default --install-extension "$extension" --force
   done < "$repo_dir/vscode/extensions.txt"
 fi
 
@@ -85,8 +95,12 @@ install_setting() {
 
 install_setting "$repo_dir/dotfiles/zshrc" "$HOME/.zshrc" '.zshrc'
 install_setting "$repo_dir/dotfiles/cmux.json" "$HOME/.config/cmux/cmux.json" '.config/cmux/cmux.json'
-install_setting "$repo_dir/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json" 'Code/settings.json'
-install_setting "$repo_dir/vscode/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json" 'Code/keybindings.json'
+if "$restore_vscode"; then
+  install_setting "$repo_dir/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json" 'Code/settings.json'
+  install_setting "$repo_dir/vscode/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json" 'Code/keybindings.json'
+else
+  echo 'Keeping VS Code settings and extensions managed by Settings Sync.'
+fi
 
 # Disable the accent popup when holding a key.
 run defaults write -g ApplePressAndHoldEnabled -bool false

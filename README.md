@@ -22,11 +22,14 @@ Node follows `latest` (including new major versions), and T3 Code follows Nightl
    ```
 
 4. Open a new terminal and restart VS Code and cmux.
-5. Complete the sign-ins below.
+5. Sign in to VS Code Settings Sync to restore your Default profile, then complete
+   the other sign-ins below.
 
 The script installs/updates Homebrew packages, selects the latest Node with mise,
-installs the latest Codex CLI into that Node installation, restores VS Code
-extensions, and copies settings. Run it from any directory using its full path.
+installs the latest Codex CLI into that Node installation, and copies shell and
+cmux settings. VS Code settings and extensions are managed by Settings Sync unless
+you explicitly request the saved snapshot below. Run the script from any directory
+using its full path.
 It supports the standard Homebrew locations on Apple Silicon and Intel Macs;
 individual apps may have their own OS or architecture requirements.
 
@@ -38,7 +41,7 @@ individual apps may have their own OS or architecture requirements.
 | CLI | Git, GitHub CLI, mise, Starship, Codex CLI |
 | Runtime | Node `latest`, managed by mise |
 | Settings | zsh, selected cmux preferences, VS Code settings and keybindings, press-and-hold disabled |
-| Editor extensions | Installed IDs captured in `vscode/extensions.txt` |
+| Editor snapshot (opt-in) | Default profile settings, keybindings, and extension IDs in `vscode/` |
 
 **Telegram, T3 Code Nightly, Spotify, and Chrome are essential:** all four are
 installed automatically by `./setup.sh` through Homebrew, with no manual downloads.
@@ -101,15 +104,36 @@ from that backup to its original location; VS Code backups are under `Code/`.
 
 Edit the repo copies to maintain your preferred settings. Changes made inside
 apps do not automatically update this repo, and running setup reapplies the repo
-versions. Close VS Code and cmux before applying settings. If you enable VS Code
-Settings Sync, decide which copy to maintain to avoid overwriting changes.
+versions for shell and cmux. Close cmux before applying its settings.
+
+### VS Code: one Default profile
+
+Main's configuration has been moved into Default, and Main has been deleted.
+Use Settings Sync for ongoing editor configuration, snippets, tasks, UI state, and
+extensions. The repo does not create Main or copy profile IDs or Sync databases.
+
+Normal setup (including `--settings-only`) leaves VS Code settings and extensions
+alone. If you need the reviewed public snapshot instead of Sync, close VS Code,
+pause Sync, and explicitly restore it:
+
+```sh
+./setup.sh --settings-only --restore-vscode --dry-run
+./setup.sh --settings-only --restore-vscode
+```
+
+VS Code must already be installed for this settings-only restore. Omit
+`--settings-only` to install apps and tools too. Restoration backs up settings and
+keybindings, replaces them with the sanitized snapshot, and installs the listed
+extensions explicitly into Default. Extra installed extensions are not removed.
+Snippets, tasks, MCP configuration, extension enablement, and UI state are not in
+this snapshot; restore those through Sync or a private profile backup.
 
 Machine-specific shell additions belong in `~/.zshrc.local`. The shell config
 initializes Homebrew, mise, and Starship without hardcoded usernames. On this Mac,
 mise was originally installed in `~/.local/bin`; new installs use Homebrew's mise.
 
 The editor configuration was sanitized: credentials, old user-specific Node
-and Python paths, Windows/Linux terminal profiles, CodeSandbox workspace ID, and
+and Python paths, Windows/Linux terminal profiles, work-service URLs, and the
 personal spelling dictionary were excluded. No credentials, app sessions, or
 browser profiles are captured. Git currently has only name/email settings, which
 are configured per machine below instead of being copied into this repo.
@@ -136,8 +160,8 @@ not transferred. Its Ghostty config was empty; Starship uses its default config.
 - The VS Code font stack requests Iosevka and other fonts, but none were installed
   in the inspected user font directory. It falls back to system fonts. Add a font
   cask to the Brewfile if you want one installed explicitly.
-- Review `vscode/extensions.txt` if you want a smaller extension set; the initial
-  list preserves all 80 installed extensions, including themes.
+- Review `vscode/extensions.txt` if you want a smaller extension snapshot; it
+  captures the installed Default profile extensions after the Sync migration.
 
 ## Maintain and share
 
