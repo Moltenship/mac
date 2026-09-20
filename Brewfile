@@ -14,6 +14,7 @@ cask "telegram"
 cask "1password"
 cask "cmux"
 cask "raycast"
+cask "shottr"
 cask "visual-studio-code"
 
 # Optional browser:

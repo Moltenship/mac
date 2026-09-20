@@ -34,7 +34,7 @@ individual apps may have their own OS or architecture requirements.
 
 | Category | Contents |
 | --- | --- |
-| Apps | 1Password, Chrome, Raycast, Spotify, Telegram, VS Code, cmux, T3 Code Nightly |
+| Apps | 1Password, Chrome, Raycast, Shottr, Spotify, Telegram, VS Code, cmux, T3 Code Nightly |
 | CLI | Git, GitHub CLI, mise, Starship, Codex CLI |
 | Runtime | Node `latest`, managed by mise |
 | Settings | zsh, selected cmux preferences, VS Code settings and keybindings |
