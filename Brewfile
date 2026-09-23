@@ -1,8 +1,14 @@
-# CLI tools. Node is managed by mise, not Homebrew.
+# CLI tools. Node, pnpm, and Bun are managed by mise, not Homebrew.
 brew "gh"
 brew "git"
 brew "mise"
 brew "starship"
+brew "fzf"
+brew "fzf-tab"
+brew "atuin"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+brew "zsh-completions"
 
 # Essential apps: always installed by setup.sh.
 cask "google-chrome"

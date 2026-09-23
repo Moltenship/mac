@@ -52,7 +52,7 @@ if ! "$settings_only"; then
   # Resolve latest again on every run, including across Node major releases.
   (
     cd "$HOME"
-    run mise use --global node@latest
+    run mise use --global node@latest pnpm@latest bun@latest
     run mise exec node@latest -- npm install --global @openai/codex@latest
   )
 fi
@@ -94,6 +94,7 @@ install_setting() {
 }
 
 install_setting "$repo_dir/dotfiles/zshrc" "$HOME/.zshrc" '.zshrc'
+install_setting "$repo_dir/dotfiles/atuin.toml" "$HOME/.config/atuin/config.toml" '.config/atuin/config.toml'
 install_setting "$repo_dir/dotfiles/cmux.json" "$HOME/.config/cmux/cmux.json" '.config/cmux/cmux.json'
 if "$restore_vscode"; then
   install_setting "$repo_dir/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json" 'Code/settings.json'

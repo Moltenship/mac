@@ -1,0 +1,12 @@
+# Keep command history local; Homebrew handles updates.
+auto_sync = false
+update_check = false
+search_mode = "fuzzy"
+style = "compact"
+inline_height = 12
+# Return the selected command for editing before execution.
+enter_accept = false
+
+# No persistent background service is needed for this setup.
+[daemon]
+enabled = false
